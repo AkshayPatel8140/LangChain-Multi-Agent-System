@@ -28,6 +28,7 @@ AGENT_LABEL_TECH = "general/technical"
 #              and dynamically chooses which to invoke based on user input.
 # -------------------------------
 
+
 # Agent 1: Technical Agent (LangSmith + Web Search)
 # This agent uses LangChain tools to retrieve information from LangSmith docs and web search.
 def create_first_agent():
@@ -36,9 +37,7 @@ def create_first_agent():
     loader = WebBaseLoader("https://docs.smith.langchain.com/overview")
 
     docs = loader.load()
-    documents = RecursiveCharacterTextSplitter(
-        chunk_size=1000, chunk_overlap=200
-    ).split_documents(docs)
+    documents = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200).split_documents(docs)
     vector = FAISS.from_documents(documents, OpenAIEmbeddings())
     retriever = vector.as_retriever()
     retriever_tool = create_retriever_tool(
@@ -134,7 +133,7 @@ def get_agent(user_input):
     # Run the chain with the user input
     response = llm_chain.invoke({"question": user_input})
 
-    return response['text']
+    return response["text"]
 
 
 def main():
@@ -180,5 +179,5 @@ def main():
 # -------------------------------
 
 # Run the main function
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
